@@ -30,7 +30,6 @@ use MediaWiki\Special\SpecialPageFactory;
 use Message;
 use MinervaUI;
 use MWException;
-use MWHttpRequest;
 use SpecialMobileWatchlist;
 use SpecialPage;
 use Title;
@@ -314,25 +313,16 @@ final class Definitions {
 	 * @throws MWException
 	 */
 	public function insertCommunityPortal( Group $group ) {
-		$message = new Message( 'Portal-url' );
-		if ( !$message->exists() ) {
-			return;
+		$title = Title::newFromText( $this->context->msg( 'portal-url' )
+			->inContentLanguage()->text() );
+		$msg = $this->context->msg( 'portal' );
+		if ( $title && !$msg->isDisabled() ) {
+			$group->insertEntry( SingleMenuEntry::create(
+				'speechBubbles',
+				$msg->text(),
+				$title->getLocalURL()
+			) );
 		}
-		$inContentLang = $message->inContentLanguage();
-		$titleName = $inContentLang->plain();
-		if ( $inContentLang->isDisabled() || MWHttpRequest::isValidURI( $titleName ) ) {
-			return;
-		}
-		$title = Title::newFromText( $titleName );
-		if ( $title === null || !$title->exists() ) {
-			return;
-		}
-
-		$group->insertEntry( SingleMenuEntry::create(
-			'speechBubbles',
-			$title->getText(),
-			$title->getLocalURL()
-		) );
 	}
 
 	/**
