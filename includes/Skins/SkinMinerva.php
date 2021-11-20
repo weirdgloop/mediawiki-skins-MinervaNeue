@@ -559,6 +559,10 @@ class SkinMinerva extends SkinMustache {
 
 			if ( $user->isRegistered() && !$msg->isDisabled() ) {
 				$out->setPageTitle( $msg->text() );
+			} else {
+				// Don’t add any <h1> to main pages
+				// for logged-out users
+				return '';
 			}
 		} elseif ( $this->isTalkPageWithViewAction() ) {
 			// We only want the simplified talk page to show for the view action of the
