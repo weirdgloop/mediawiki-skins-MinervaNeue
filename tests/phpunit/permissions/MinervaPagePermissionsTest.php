@@ -101,7 +101,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testInvalidPageActionsArentAllowed() {
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'test' ), [] );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_MAIN, 'Test' ), [] );
 
 		// By default, the "talk" and "watch" page actions are allowed but are now deemed invalid.
 		$this->assertFalse( $perms->isAllowed( IMinervaPagePermissions::TALK ) );
@@ -112,7 +112,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testValidPageActionsAreAllowed() {
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'test' ) );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_MAIN, 'Test' ) );
 		$this->assertTrue( $perms->isAllowed( IMinervaPagePermissions::TALK ) );
 		$this->assertTrue( $perms->isAllowed( IMinervaPagePermissions::WATCH ) );
 	}
@@ -146,7 +146,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 		$contentHandler->method( 'supportsDirectApiEditing' )
 			->will( $this->returnValue( $supportsDirectApiEditing ) );
 
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'test' ), null, [],
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_MAIN, 'Test' ), null, [],
 			$contentHandler );
 
 		$this->assertEquals( $expected, $perms->isAllowed( IMinervaPagePermissions::CONTENT_EDIT ) );
@@ -156,7 +156,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testPageActionsWhenOnUserPage() {
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'User:Admin' ) );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_USER, 'Admin' ) );
 		$this->assertTrue( $perms->isAllowed( IMinervaPagePermissions::TALK ) );
 	}
 
@@ -164,7 +164,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testPageActionsWhenOnAnonUserPage() {
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'User:1.1.1.1' ) );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_USER, '1.1.1.1' ) );
 		$this->assertTrue( $perms->isAllowed( IMinervaPagePermissions::TALK ) );
 	}
 
@@ -194,7 +194,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 */
 	public function testGlobalHideLanguageLinksTakesPrecedence() {
 		$this->setMwGlobals( [ 'wgHideInterlanguageLinks' => true ] );
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'test' ) );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_MAIN, 'Test' ) );
 		$this->assertFalse( $perms->isAllowed( IMinervaPagePermissions::SWITCH_LANGUAGE ) );
 	}
 
@@ -240,7 +240,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testWatchIsAllowedOnlyWhenWatchlistPermissionsAreGranted() {
-		$title = Title::newFromText( 'test_watchstar_permissions' );
+		$title = Title::makeTitle( NS_MAIN, 'Test_watchstar_permissions' );
 
 		$userMock = $this->getMockBuilder( User::class )
 			->disableOriginalConstructor()
@@ -283,7 +283,7 @@ class MinervaPagePermissionsTest extends MediaWikiTestCase {
 	 * @covers ::isAllowed
 	 */
 	public function testMoveAndDeleteAndProtectNotAllowedByDefault() {
-		$perms = $this->buildPermissionsObject( Title::newFromText( 'test' ), [] );
+		$perms = $this->buildPermissionsObject( Title::makeTitle( NS_MAIN, 'Test' ), [] );
 		$this->assertFalse( $perms->isAllowed( IMinervaPagePermissions::MOVE ) );
 		$this->assertFalse( $perms->isAllowed( IMinervaPagePermissions::DELETE ) );
 		$this->assertFalse( $perms->isAllowed( IMinervaPagePermissions::PROTECT ) );

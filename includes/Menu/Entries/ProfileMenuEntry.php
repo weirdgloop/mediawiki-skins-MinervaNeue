@@ -83,7 +83,7 @@ final class ProfileMenuEntry implements IProfileMenuEntry {
 		$username = $this->user->getName();
 		return [ [
 			'text' => $this->customProfileLabel ?? $username,
-			'href' => $this->customProfileURL ?? Title::newFromText( $username, NS_USER )->getLocalURL(),
+			'href' => $this->customProfileURL ?? Title::makeTitle( NS_USER, $username )->getLocalURL(),
 			'class' => MinervaUI::iconClass( 'userAvatar-base20',
 				'before', 'primary-action', 'wikimedia' ),
 			'data-event-name' => 'menu.' . (
