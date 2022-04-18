@@ -32,9 +32,6 @@ jobs:
         upstream_sync_branch: REL1_37
         upstream_sync_repo: wikimedia/mediawiki-skins-MinervaNeue
 
-        # Set test_mode true to run tests instead of the true action!!
-        test_mode: true
-
     # Step 3: Display a sample message based on the sync output var 'has_new_commits'
     - name: New commits found
       if: steps.sync.outputs.has_new_commits == 'true'
