@@ -10,7 +10,8 @@
 			"राम प्रसाद जोशी",
 			"सरोज कुमार ढकाल",
 			"हिमाल सुबेदी",
-			"Bada Kaji"
+			"Bada Kaji",
+			"बडा काजी"
 		]
 	},
 	"minerva-last-modified-date": "अन्तिम सम्पादन $1, $2",
@@ -26,7 +27,7 @@
 	"mobile-frontend-languages-not-available": "यो पृष्ठ अन्य भाषाहरूमा उपलब्ध छैन।",
 	"mobile-frontend-main-menu-button-tooltip": "मुख्य सूची खोल्नुहोस्",
 	"mobile-frontend-main-menu-contributions": "योगदानहरू",
-	"mobile-frontend-main-menu-login": "प्रवेश",
+	"mobile-frontend-main-menu-login": "प्रवेश गर्नुहोस्",
 	"mobile-frontend-main-menu-logout": "निर्गमन",
 	"mobile-frontend-main-menu-nearby": "नजिकैको",
 	"mobile-frontend-main-menu-settings": "मेरो अभिरुचिहरू",
@@ -52,6 +53,7 @@
 	"minerva-page-actions-permalink": "स्थायी सूत्र",
 	"minerva-page-actions-backlinks": "यहाँ के जोडिन्छ",
 	"minerva-page-actions-cite": "लेख उद्दरण गर्नुहोस्",
+	"minerva-page-actions-move": "सार्नुहोस्",
 	"minerva-page-actions-user-groups": "प्रयोगकर्ताको अधिकारहरू",
 	"minerva-page-actions-wikibase": "{{WBREPONAME}} सामग्री",
 	"minerva-page-actions-language-switcher": "भाषाहरू",
