@@ -12,6 +12,21 @@
  */
 @import 'mediawiki.skin.defaults.less';
 
+// Import the Codex design tokens from the “WikimediaUI” theme.
+@import 'mediawiki.skin.codex-design-tokens/theme-wikimedia-ui.less';
+
+// Overrides for Codex tokens:
+
+@font-size-base: 1em; // Codex: 16px
+
+// == Typography ==
+// Body content uses the user setting in browser / the system default sans-serif font:
+// Arial on Windows, Roboto on Android.
+// FIXME: Use WikimediaUI Base's OS specific default sans-serif fonts.
+@font-family-sans: @font-family-sans--fallback;
+
+// Overrides for non-Codex variables:
+
 // == Colors ==
 @color-link: #36c;
 @color-link--visited: #795cb2;
@@ -26,11 +41,3 @@
 @color-link-external: #36c;
 @color-link-external--visited: #795cb2;
 @color-link-external--active: #faa700;
-
-// Body content uses the user setting in browser / the system default sans-serif font:
-// Arial on Windows, Roboto on Android.
-// FIXME: Use WikimediaUI Base's OS specific default sans-serif fonts.
-@font-family-sans: sans-serif;
-
-// Matches WikimediaUI Base and OOUI/WikimediaUI theme.
-@border-radius-base: 2px;

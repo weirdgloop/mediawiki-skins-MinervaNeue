@@ -22,7 +22,6 @@ namespace MediaWiki\Minerva\Menu;
 
 use DomainException;
 use MediaWiki\Minerva\Menu\Entries\IMenuEntry;
-use MediaWiki\Minerva\Menu\Entries\SingleMenuEntry;
 
 /**
  * Model for a menu that can be presented in a skin.
@@ -101,6 +100,16 @@ final class Group {
 	}
 
 	/**
+	 * Prepend new menu entry
+	 * @param IMenuEntry $entry
+	 * @throws DomainException When the entry already exists
+	 */
+	public function prependEntry( IMenuEntry $entry ) {
+		$this->throwIfNotUnique( $entry->getName() );
+		array_unshift( $this->entries, $entry );
+	}
+
+	/**
 	 * Insert new menu entry
 	 * @param IMenuEntry $entry
 	 * @throws DomainException When the entry already exists
@@ -126,34 +135,6 @@ final class Group {
 			}
 		}
 		throw new DomainException( "The \"{$name}\" entry doesn't exist." );
-	}
-
-	/**
-	 * Insert an entry after an existing one.
-	 * @deprecated since 1.39
-	 * @param string $targetName The name of the existing entry to insert
-	 *  the new entry after
-	 * @param string $name The name of the new entry
-	 * @param string $text Entry label
-	 * @param string $url The URL entry points to
-	 * @param string $className Optional HTML classes
-	 * @param string|null $icon defaults to $name if not specified
-	 * @param bool $trackable Whether an entry will track clicks or not. Default is false.
-	 * @param bool $isJSOnly Whether the entry works without JS
-	 * @throws DomainException When the existing entry doesn't exist
-	 */
-	public function insertAfter( $targetName, $name, $text, $url,
-			$className = '', $icon = null, $trackable = false, $isJSOnly = false
-	) {
-		wfDeprecated( __METHOD__, '1.39' );
-		$this->throwIfNotUnique( $name );
-		$index = $this->search( $targetName );
-
-		$entry = SingleMenuEntry::create( $name, $text, $url, $className, $icon, $trackable );
-		if ( $isJSOnly ) {
-			$entry->setJSOnly();
-		}
-		array_splice( $this->entries, $index + 1, 0, [ $entry ] );
 	}
 
 	/**
