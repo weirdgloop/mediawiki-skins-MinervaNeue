@@ -5,7 +5,8 @@
 			"Kimberli Mäkäräinen (WMNO)",
 			"Lea-Christine Sara",
 			"Trondtr",
-			"Yupik"
+			"Yupik",
+			"WMNO sámeprošeakta"
 		]
 	},
 	"minerva-last-modified-date": "Maŋemus rievdaduvvon $1, diibmu $2",
@@ -17,8 +18,8 @@
 	"mobile-frontend-editor-redlink-explain": "Dát siidu ii leat vuos ráhkaduvvon",
 	"mobile-frontend-editor-redlink-leave": "Giitu, muhto aa",
 	"mobile-frontend-history": "Čájet dán siiddu rievdadanhistorjjá.",
-	"mobile-frontend-home-button": "Ruoktot",
-	"mobile-frontend-language-article-heading": "Giella",
+	"mobile-frontend-home-button": "Ovdasiidu",
+	"mobile-frontend-language-article-heading": "Loga eará gillii",
 	"mobile-frontend-languages-not-available": "Dat siidu ii leat olámuttos eara gielaide.",
 	"mobile-frontend-main-menu-button-tooltip": "Raba váldosiiddu",
 	"mobile-frontend-main-menu-contributions": "Rievdadusat",
@@ -52,7 +53,6 @@
 	"minerva-page-actions-language-switcher": "Gielat",
 	"minerva-page-actions-history": "Historjá",
 	"minerva-prefs-talkpage": "[[mw:Talk:Moderator Tools/Content moderation on mobile web|Ságastallan]]",
-	"skinname-minerva": "MinervaNeue",
 	"minerva-skin-desc": "Dohkálaš olggosoainnihahte telefovdna ",
 	"skin-minerva-issue-learn-more": "Oahpa eambbo",
 	"skin-minerva-mobile-option-MinervaShowCategories": "Kategoriijat",
