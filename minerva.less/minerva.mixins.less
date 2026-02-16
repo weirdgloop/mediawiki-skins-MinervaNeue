@@ -87,7 +87,8 @@
 }
 
 .night-mode-invert-image() {
-	filter: invert( 1 ) hue-rotate( 180deg );
+	// WGL change: do not invert any images in dark mode
+	//filter: invert( 1 ) hue-rotate( 180deg );
 }
 
 /** This mixin should only be used where it's safe to do so. It should not be applied
