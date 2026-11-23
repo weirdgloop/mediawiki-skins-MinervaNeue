@@ -50,6 +50,7 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\Options\UserOptionsManager;
 use MediaWiki\User\UserIdentityUtils;
 use MediaWiki\Utils\MWTimestamp;
+use Wikimedia\HtmlArmor\HtmlArmor;
 
 /**
  * Minerva: Born from the godhead of Jupiter with weapons!
@@ -372,8 +373,7 @@ class SkinMinerva extends SkinMustache {
 		$usermessage = $data['html-user-message'] ?? '';
 		if ( $usermessage ) {
 			$data['html-user-message'] = Html::warningBox(
-				'<span class="minerva-icon minerva-icon--userTalk-warning"></span>&nbsp;'
-					. $usermessage,
+				$usermessage,
 				'minerva-anon-talk-message'
 			);
 		}
@@ -441,7 +441,7 @@ class SkinMinerva extends SkinMustache {
 			],
 			// Refer to https://phabricator.wikimedia.org/T388036#10608151 for the following line:
 			'data-donation-banner' => $this->skinOptions->get( SkinOptions::SHOW_DONATE_BANNER ) &&
-				$this->getUser()->isAnon(),
+				$this->getUser()->isAnon() ? $this->getDonateBannerData() : null,
 			'html-minerva-tagline' => $this->getTaglineHtml(),
 			'html-minerva-user-menu' => $this->getPersonalToolsMenu( $navUserMenu ),
 			'data-minerva-notifications' => $notifications ? [
@@ -864,6 +864,35 @@ class SkinMinerva extends SkinMustache {
 	}
 
 	/**
+	 * Build the donate banner links from interface messages, and reject unsafe values.
+	 *
+	 * @return array
+	 */
+	private function getDonateBannerData(): array {
+		$gifSrc = $this->getLocalImagePathFromMessage( 'skin-minerva-donate-banner-gif' );
+		$reducedMotionSrc = $this->getLocalImagePathFromMessage( 'skin-minerva-donate-banner-reduced-motion' );
+
+		return [
+			'href' => self::makeInternalOrExternalUrl( $this->msg( 'skin-minerva-donate-banner-url' )->text() ),
+			// Require both images so a missing reduced-motion image cannot fall back to the animation.
+			'data-image' => $gifSrc !== '' && $reducedMotionSrc !== '' ? [
+				'gif-src' => $gifSrc,
+				'reduced-motion-srcset' => $reducedMotionSrc,
+			] : null,
+		];
+	}
+
+	/**
+	 * @param string $key Message key that holds an image path
+	 * @return string The path, or an empty string if it is not a plain path on this site
+	 */
+	private function getLocalImagePathFromMessage( string $key ): string {
+		$path = $this->msg( $key )->text();
+		// Only allow paths on this site, so the browser does not load images from other hosts.
+		return preg_match( '!^/[\w-][\w./-]*$!D', $path ) ? $path : '';
+	}
+
+	/**
 	 * Returns the HTML representing the tagline
 	 * @return string HTML for tagline
 	 */
@@ -904,14 +933,16 @@ class SkinMinerva extends SkinMustache {
 	 * @return string HTML for header
 	 */
 	private function getUserPageHeadingHtml(): string {
-		// The heading is just the username without namespace
-		return Html::element( 'h1',
+		// The heading is the title without namespace. Use the main part of the
+		// display title, so that {{DISPLAYTITLE}} is respected (T423028).
+		[ , , $mainTitle ] = $this->getOutput()->getDisplayTitleParts();
+		return Html::rawElement( 'h1',
 			// These IDs and classes should match Skin::getTemplateData
 			[
 				'id' => 'firstHeading',
 				'class' => 'firstHeading mw-first-heading mw-minerva-user-heading',
 			],
-			$this->skinUserPageHelper->getPageUser()->getName()
+			HtmlArmor::getHtml( $mainTitle )
 		);
 	}
 
